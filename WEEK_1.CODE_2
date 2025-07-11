@@ -1,0 +1,81 @@
+create database school;
+use school;
+create table student
+(
+roll_no int primary key,
+student_name varchar(50) not null,
+age int check (age>18),
+branch_id int
+);
+drop table student;
+ insert into student (roll_no,student_name,age,branch_id)
+ values(1,'andrew',18,10),(2,'angel',19,10),
+ (3,'priya',20,10),(4,'analisa',21,11),(5,'anna',21,12); 
+set sql_safe_updates = 0;
+ UPDATE student 
+SET student_name = 'mahmud'
+WHERE roll_no = 1;
+
+delete from student 
+where roll_no = 2;
+ 
+ select * from student ;
+ -- 1st way......
+ create table student12
+ ( 
+ roll int primary key,
+ name varchar(50) not null,
+ email varchar(50) unique,
+ address varchar(50),
+ age int check(age >18)
+ );
+ -- 2nd way..
+ -- ( 
+ -- roll int,
+-- name varchar(50) not null,
+-- email varchar(50),
+-- address varchar(50),
+  -- age int,
+ 
+-- primary key(roll),
+-- unique (email),
+-- check(age>18)
+-- );
+ -- 3rd way..
+-- (
+ -- roll int,
+-- name varchar(50) not null,
+-- email varchar(50),
+-- address varchar(50),
+ -- age int,
+ 
+-- constraint pk_rules primary key(roll),
+-- constraint unique_rules unique(email),
+-- constraint checking_rules check(age>18)
+-- );
+ 
+ -- 4th way...
+ 
+-- (
+ -- roll int,
+-- name varchar(50) not null,
+-- email varchar(50),
+-- address varchar(50),
+-- age int,
+ 
+ -- CONSTRAINT primary key(roll),
+-- CONSTRAINT unique(email),
+-- CONSTRAINT check(age>18)
+-- );
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
