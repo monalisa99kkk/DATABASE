@@ -88,3 +88,63 @@ WHERE FIRST_NAME LIKE '%SON%' OR LAST_NAME LIKE '%SON%';
 SELECT *
 FROM EMPLOYEE 
 WHERE DEPARTMENT = "ENGINEERING";
+
+PRACTICE PROBLEM 2...
+
+CREATE TABLE BOOKS 
+(
+ id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(100),
+  author VARCHAR(50),
+  year INT,
+  price INT
+);
+INSERT INTO books (title, author, year, price) VALUES
+  ('The Alchemist', 'Paulo Coelho', 1988, 300),
+  ('Atomic Habits', 'James Clear', 2018, 450),
+  ('The Theory of Everything', 'Stephen Hawking', 2002, 500),
+  ('Ikigai', 'Héctor García', 2016, 350),
+  ('Rich Dad Poor Dad', 'Robert Kiyosaki', 1997, 400);
+SELECT * FROM BOOKS;
+SELECT * FROM BOOKS
+WHERE YEAR>2000;
+SELECT * FROM BOOKS
+WHERE PRICE >400;
+SET SQL_SAFE_UPDATES = 0;
+UPDATE BOOKS
+SET PRICE = 380
+WHERE TITLE = 'IKIGAI';
+SELECT * FROM BOOKS;
+ALTER TABLE BOOKS
+ADD GENRE VARCHAR(50);
+DELETE FROM BOOKS
+WHERE  TITLE = 'IKIGAI';
+
+SELECT TITLE ,AUTHOR FROM BOOKS;
+
+SELECT * FROM BOOKS
+ WHERE AUTHOR = 'JAMES CLEAR';
+ 
+ SELECT *FROM BOOKS
+ ORDER BY PRICE ASC;
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
