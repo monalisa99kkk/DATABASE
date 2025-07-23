@@ -1,0 +1,137 @@
+-- PRACTICE_PROBLEM 1........
+Before ans the questions, please setup the dummydb which I provided on previous module
+Questions
+1.Determine the third highest salary and which employee receives it?
+2.Determine the third lowest salary and which employee receives it?
+3.Which employee has been hired after Steven?
+4.With common table expression solve the question 1 and 2
+
+                      ANSWER
+
+1.SELECT* FROM EMPLOYEES 
+WHERE SALARY = (SELECT MAX(SALARY) FROM EMPLOYEES
+ WHERE SALARY <(SELECT MAX(SALARY) FROM EMPLOYEES
+WHERE SALARY < (SELECT MAX(SALARY) FROM EMPLOYEES))); 
+
+         --- 2ND WAY ---
+
+SELECT* FROM EMPLOYEES 
+WHERE SALARY = (SELECT DISTINCT SALARY
+FROM EMPLOYEES 
+ORDER BY SALARY DESC
+LIMIT 2,1);
+
+
+2.SELECT* FROM EMPLOYEES 
+WHERE SALARY = (SELECT MIN(SALARY) FROM EMPLOYEES
+ WHERE SALARY >(SELECT MIN(SALARY) FROM EMPLOYEES
+WHERE SALARY >(SELECT MIN(SALARY) FROM EMPLOYEES)))
+LIMIT 1; 
+
+
+      ---- 2ND WAY ----
+
+SELECT* FROM EMPLOYEES 
+WHERE SALARY = (SELECT DISTINCT SALARY
+FROM EMPLOYEES 
+ORDER BY SALARY ASC
+LIMIT 2,1)
+LIMIT 1;
+
+3.SELECT * FROM EMPLOYEES
+WHERE HIRE_DATE > (
+    SELECT HIRE_DATE FROM EMPLOYEES
+    WHERE FIRST_NAME = 'Steven'
+    LIMIT 1
+)
+LIMIT 1;
+
+
+4.WITH 3RDHIGHEST AS
+               (SELECT DISTINCT SALARY AS SAL
+                FROM EMPLOYEES 
+                ORDER BY SALARY DESC
+				LIMIT 2,1),
+                
+		3RD AS 
+        (SELECT * FROM  EMPLOYEES,3RDHIGHEST
+         WHERE EMPLOYEES.SALARY = 3RDHIGHEST.SAL)
+  
+
+SELECT * FROM 3RD;
+
+
+-- 2ND WAY --
+
+WITH MAX1 AS (
+    SELECT MAX(SALARY) AS SAL FROM EMPLOYEES
+),
+MAX2 AS (
+    SELECT MAX(SALARY) AS SAL FROM EMPLOYEES
+    WHERE SALARY < (SELECT SAL FROM MAX1)
+),
+MAX3 AS (
+    SELECT MAX(SALARY) AS SAL FROM EMPLOYEES
+    WHERE SALARY < (SELECT SAL FROM MAX2)
+)
+SELECT * FROM EMPLOYEES
+WHERE SALARY = (SELECT SAL FROM MAX3);
+
+
+
+4.part2
+
+with min1 AS
+            ( 
+              SELECT MIN(SALARY) AS SAL1
+              FROM EMPLOYEES
+              ),
+   MIN2 AS 
+			  (
+                SELECT MIN(SALARY ) AS  SAL2
+                FROM EMPLOYEES
+                WHERE SALARY >( SELECT SAL1
+              FROM MIN1)),
+MIN3 AS      
+               (
+                SELECT MIN(SALARY ) AS  SAL3
+                FROM EMPLOYEES
+                WHERE SALARY >( SELECT SAL2 FROM MIN2)
+              )
+                                
+SELECT * FROM EMPLOYEES
+WHERE SALARY = (SELECT SAL3 FROM MIN3)
+LIMIT 1;
+
+
+ -- 2ND WAY  ---
+ 
+ WITH SALARY AS 
+               (
+                 SELECT DISTINCT SALARY SAL
+                 FROM EMPLOYEES
+                 ORDER BY SALARY ASC 
+                 LIMIT 2,1),
+                 
+ LOWESTSAL AS 
+             (
+               SELECT * FROM EMPLOYEES
+               WHERE EMPLOYEES.SALARY = SALARY.SAL)
+             --   WHERE EMPLOYEES.SALARY = (SELECT SAL FROM SALARY)
+               
+               SELECT SAL FROM SALARY;
+              
+              
+              
+
+
+
+
+
+
+
+
+
+
+
+
