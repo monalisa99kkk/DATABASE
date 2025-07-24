@@ -17,3 +17,32 @@ WHERE  AUTHOR_ID = VIEWER_ID
 ORDER BY ID ASC;
 
 5.
+
+
+
+
+
+
+
+
+
+
+6
+
+
+
+
+
+
+
+
+leetcode 176 no problem:
+# Write your MySQL query statement b
+
+select max(salary)  as SecondHighestSalary from employee
+where salary not in (select max(salary) from employee)
+
+
+
+
+
